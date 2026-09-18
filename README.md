@@ -1,4 +1,4 @@
-# Plateforme de Formation en Ligne (swap)
+# Swap — Plateforme de Formation en Ligne
 
 Plateforme SaaS de formations en ligne : catalogue public, tunnel d'inscription
 avec paiement mobile money (Djomy), espace apprenant par lien d'accès privé,

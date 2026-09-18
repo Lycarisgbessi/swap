@@ -23,17 +23,17 @@ export function useToast() {
 }
 
 const icons = {
-  success: <CheckCircle className="w-5 h-5 text-emerald-400" />,
-  error:   <XCircle    className="w-5 h-5 text-red-400" />,
-  warning: <AlertCircle className="w-5 h-5 text-amber-400" />,
-  info:    <Info       className="w-5 h-5 text-blue-400" />,
+  success: <CheckCircle className="w-5 h-5" style={{ color: '#22C55E' }} />,
+  error:   <XCircle    className="w-5 h-5" style={{ color: '#EF4444' }} />,
+  warning: <AlertCircle className="w-5 h-5" style={{ color: '#FFC72C' }} />,
+  info:    <Info       className="w-5 h-5" style={{ color: '#22C55E' }} />,
 };
 
 const colors = {
-  success: 'border-emerald-500/30 bg-emerald-500/10',
-  error:   'border-red-500/30    bg-red-500/10',
-  warning: 'border-amber-500/30  bg-amber-500/10',
-  info:    'border-blue-500/30   bg-blue-500/10',
+  success: 'border-[rgba(34,197,94,0.5)]  bg-[#062817]',
+  error:   'border-[rgba(239,68,68,0.5)]  bg-[#062817]',
+  warning: 'border-[rgba(255,199,44,0.5)] bg-[#062817]',
+  info:    'border-[rgba(34,197,94,0.5)]  bg-[#062817]',
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -58,7 +58,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               initial={{ opacity: 0, x: 60, scale: 0.9 }}
               animate={{ opacity: 1, x: 0,  scale: 1 }}
               exit={{    opacity: 0, x: 60, scale: 0.9 }}
-              className={`flex items-start gap-3 p-4 rounded-2xl border backdrop-blur-xl cinematic-shadow ${colors[t.type]}`}
+              className={`flex items-start gap-3 p-4 rounded-2xl border-2 backdrop-blur-xl shadow-2xl ${colors[t.type]}`}
             >
               <div className="shrink-0 mt-0.5">{icons[t.type]}</div>
               <p className="text-sm text-white/90 leading-relaxed flex-1">{t.message}</p>

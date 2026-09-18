@@ -118,7 +118,7 @@ export default function AdminStudents() {
               style={{
                 borderRight: '1px solid rgba(255,255,255,0.08)',
                 ...(filter === f
-                  ? { background: 'rgba(220,179,47,0.1)', color: '#dcb32f' }
+                  ? { background: 'rgba(255,199,44,0.1)', color: '#FFC72C' }
                   : { background: 'transparent', color: 'rgba(248,250,252,0.5)' }
                 )
               }}
@@ -137,7 +137,7 @@ export default function AdminStudents() {
       ) : filtered.length === 0 ? (
         <div
           className="p-12 text-center rounded-2xl"
-          style={{ border: '2px dashed rgba(15,23,42,0.1)', background: 'rgba(255,255,255,0.02)' }}
+          style={{ border: '2px dashed rgba(16,36,26,0.12)', background: 'rgba(255,255,255,0.02)' }}
         >
           <Users className="w-12 h-12 mx-auto mb-3" style={{ color: 'rgba(248,250,252,0.2)' }} />
           <p className="font-medium" style={{ color: 'rgba(248,250,252,0.45)' }}>Aucun apprenant trouvé</p>
@@ -155,9 +155,9 @@ export default function AdminStudents() {
                 {/* Avatar */}
                 <div
                   className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(220,179,47,0.15)', border: '1px solid rgba(220,179,47,0.2)' }}
+                  style={{ background: 'rgba(255,199,44,0.15)', border: '1px solid rgba(255,199,44,0.2)' }}
                 >
-                  <span className="font-bold text-sm" style={{ color: '#dcb32f' }}>
+                  <span className="font-bold text-sm" style={{ color: '#FFC72C' }}>
                     {s.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
                   </span>
                 </div>
@@ -200,8 +200,8 @@ export default function AdminStudents() {
                   onClick={() => setExpanded(p => ({ ...p, [s.id]: !p[s.id] }))}
                   className="shrink-0 transition-colors p-2 rounded-full"
                   style={{ color: 'rgba(248,250,252,0.35)' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#dcb32f'; (e.currentTarget as HTMLElement).style.background = 'rgba(220,179,47,0.1)'; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(15,23,42,0.35)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#FFC72C'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,199,44,0.1)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(185,214,198,0.35)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
                 >
                   {expanded[s.id] ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
                 </button>
@@ -226,7 +226,7 @@ export default function AdminStudents() {
                           style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                         >
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'rgba(220,179,47,0.1)' }}>
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'rgba(255,199,44,0.1)' }}>
                                <BookOpen className="w-5 h-5 text-primary" />
                             </div>
                             <div className="min-w-0">
@@ -281,7 +281,7 @@ export default function AdminStudents() {
                               </span>
                               <button
                                 onClick={() => handleValidatePayment(s.id, enr.enrollment_id)}
-                                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all bg-[#dcb32f]/20 hover:bg-[#dcb32f]/30 text-[#dcb32f] border border-[#dcb32f]/30"
+                                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all bg-[#FFC72C]/20 hover:bg-[#FFC72C]/30 text-[#FFC72C] border border-[#FFC72C]/30"
                               >
                                 <Check className="w-4 h-4" /> Forcer paiement & Générer lien
                               </button>

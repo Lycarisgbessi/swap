@@ -177,7 +177,7 @@ export default function AdminCourseDetail() {
                 : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
             }`}
           >
-            <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'text-gold' : ''}`} />
+            <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'text-yellow-400' : ''}`} />
             <span>{tab.label}</span>
           </button>
         ))}

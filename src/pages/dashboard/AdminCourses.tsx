@@ -16,13 +16,13 @@ function ConfirmModal({
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(4,13,28,0.8)', backdropFilter: 'blur(6px)' }}
+      style={{ background: 'rgba(4,24,15,0.8)', backdropFilter: 'blur(6px)' }}
       onClick={onCancel}>
       <motion.div
         initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
         onClick={e => e.stopPropagation()}
         className="w-full max-w-md p-7 rounded-2xl shadow-2xl"
-        style={{ background: '#0d2347', border: '1px solid rgba(239,68,68,0.3)' }}>
+        style={{ background: 'var(--green-900)', border: '1px solid rgba(239,68,68,0.3)' }}>
         <div className="flex items-start gap-4 mb-6">
           <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
             style={{ background: 'rgba(239,68,68,0.12)' }}>
@@ -72,7 +72,7 @@ function CourseMenu({
       <button
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
         className="p-2 rounded-lg transition-colors"
-        style={{ color: open ? '#dcb32f' : 'rgba(15,23,42,0.35)', background: open ? 'rgba(220,179,47,0.1)' : 'transparent' }}>
+        style={{ color: open ? '#FFC72C' : 'rgba(185,214,198,0.35)', background: open ? 'rgba(255,199,44,0.1)' : 'transparent' }}>
         <MoreVertical className="w-4 h-4" />
       </button>
 
@@ -84,7 +84,7 @@ function CourseMenu({
             exit={{ opacity: 0, scale: 0.95, y: -6 }}
             transition={{ duration: 0.15 }}
             className="absolute right-0 top-10 w-48 rounded-xl shadow-2xl z-30 overflow-hidden"
-            style={{ background: '#0d2347', border: '1px solid rgba(15,23,42,0.1)' }}>
+            style={{ background: 'var(--green-900)', border: '1px solid rgba(16,36,26,0.12)' }}>
 
             {/* Modifier */}
             <button
@@ -93,7 +93,7 @@ function CourseMenu({
               style={{ color: '#f8fafc' }}
               onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-              <Edit className="w-4 h-4" style={{ color: '#dcb32f' }} />
+              <Edit className="w-4 h-4" style={{ color: '#FFC72C' }} />
               Modifier
             </button>
 
@@ -222,7 +222,7 @@ export default function AdminCourses() {
             initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
             className="fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl font-semibold text-sm"
             style={{
-              background: toast.type === 'success' ? '#0d2347' : 'rgba(239,68,68,0.15)',
+              background: toast.type === 'success' ? 'var(--green-900)' : 'rgba(239,68,68,0.15)',
               border: `1px solid ${toast.type === 'success' ? 'rgba(52,211,153,0.3)' : 'rgba(239,68,68,0.4)'}`,
               color: toast.type === 'success' ? '#34d399' : '#f87171'
             }}>
@@ -252,7 +252,7 @@ export default function AdminCourses() {
       </div>
 
       {/* Table card */}
-      <div className="rounded-2xl overflow-hidden" style={{ background: '#040d1c', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--green-950)', border: '1px solid rgba(255,255,255,0.06)' }}>
 
         {/* Filters */}
         <div className="flex flex-col md:flex-row md:items-center gap-4 p-5"
@@ -270,7 +270,7 @@ export default function AdminCourses() {
                 onClick={() => setStatusFilter(s)}
                 className="px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wide transition-all duration-200"
                 style={statusFilter === s
-                  ? { background: '#dcb32f', color: '#071529' }
+                  ? { background: '#FFC72C', color: '#071529' }
                   : { background: 'rgba(255,255,255,0.05)', color: 'rgba(248,250,252,0.5)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 {s === 'all' ? 'Tous' : s === 'published' ? 'Publiés' : 'Brouillons'}
               </button>
@@ -310,7 +310,7 @@ export default function AdminCourses() {
                       <Link to={`/admin/courses/${course.id}`}
                         className="font-bold text-white text-sm transition-colors"
                         style={{ textDecoration: 'none' }}
-                        onMouseEnter={e => (e.currentTarget.style.color = '#dcb32f')}
+                        onMouseEnter={e => (e.currentTarget.style.color = '#FFC72C')}
                         onMouseLeave={e => (e.currentTarget.style.color = '#f8fafc')}>
                         {course.title}
                       </Link>
@@ -342,7 +342,7 @@ export default function AdminCourses() {
 
                     {/* Price */}
                     <td className="py-4 px-5">
-                      <span className="font-bold text-sm" style={{ color: '#dcb32f' }}>{course.price}</span>
+                      <span className="font-bold text-sm" style={{ color: '#FFC72C' }}>{course.price}</span>
                     </td>
 
                     {/* Visits */}
@@ -357,7 +357,7 @@ export default function AdminCourses() {
                         <Link to={`/admin/courses/${course.id}`}
                           className="p-2 rounded-lg transition-colors"
                           style={{ color: 'rgba(248,250,252,0.35)' }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#dcb32f'; (e.currentTarget as HTMLElement).style.background = 'rgba(220,179,47,0.08)'; }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#FFC72C'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,199,44,0.08)'; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(248,250,252,0.35)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}>
                           <Edit className="w-4 h-4" />
                         </Link>
@@ -415,13 +415,13 @@ export default function AdminCourses() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ background: 'rgba(4,13,28,0.8)', backdropFilter: 'blur(6px)' }}
+            style={{ background: 'rgba(4,24,15,0.8)', backdropFilter: 'blur(6px)' }}
             onClick={() => setIsCreateModalOpen(false)}>
             <motion.div
               initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
               onClick={e => e.stopPropagation()}
               className="p-8 max-w-xl w-full rounded-2xl shadow-2xl"
-              style={{ background: '#0d2347', border: '1px solid rgba(220,179,47,0.2)' }}>
+              style={{ background: 'var(--green-900)', border: '1px solid rgba(255,199,44,0.2)' }}>
 
               <div className="flex justify-between items-start mb-8">
                 <div>
@@ -459,16 +459,16 @@ export default function AdminCourses() {
                       <label key={opt.value}
                         className="flex items-center gap-2.5 p-3.5 rounded-xl cursor-pointer transition-all text-sm font-semibold"
                         style={modalCourseType === opt.value
-                          ? { border: '2px solid #dcb32f', background: 'rgba(220,179,47,0.08)', color: '#dcb32f' }
+                          ? { border: '2px solid #FFC72C', background: 'rgba(255,199,44,0.08)', color: '#FFC72C' }
                           : { border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)', color: 'rgba(248,250,252,0.6)' }}>
                         <input type="radio" name="type" value={opt.value}
                           checked={modalCourseType === opt.value}
                           onChange={e => setModalCourseType(e.target.value)}
                           className="sr-only" />
                         <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                          style={{ borderColor: modalCourseType === opt.value ? '#dcb32f' : 'rgba(255,255,255,0.2)' }}>
+                          style={{ borderColor: modalCourseType === opt.value ? '#FFC72C' : 'rgba(255,255,255,0.2)' }}>
                           {modalCourseType === opt.value && (
-                            <div className="w-2 h-2 rounded-full" style={{ background: '#dcb32f' }} />
+                            <div className="w-2 h-2 rounded-full" style={{ background: '#FFC72C' }} />
                           )}
                         </div>
                         {opt.label}

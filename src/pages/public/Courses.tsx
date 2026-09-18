@@ -5,17 +5,12 @@ import { Link } from 'react-router-dom';
 import { getCourses } from '../../services/api';
 import { getConvertedPrices } from '../../utils/currency';
 import { useSettings } from '../../components/SettingsProvider';
+import { Reveal, RevealText, Magnetic } from '../../components/Reveal';
 
-const fadeUp = {
-  hidden:  { opacity: 0, y: 35 },
-  visible: (i: number = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 }
-  }),
-};
-const stagger = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.08 } },
+const TYPE_META: Record<string, { label: string; icon: typeof PlayCircle; color: string; bg: string }> = {
+  native:   { label: 'En ligne',       icon: PlayCircle, color: '#149352', bg: '#DCFCE7' },
+  package:  { label: 'Téléchargement', icon: Download,   color: '#b8860b', bg: '#FFF4CC' },
+  external: { label: 'Live',           icon: LinkIcon,   color: '#E23744', bg: '#FDE3E5' },
 };
 
 export default function Courses() {
@@ -42,180 +37,188 @@ export default function Courses() {
   });
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--background)' }}>
+    <div className="min-h-screen section-cream">
 
       {/* ── Hero ── */}
-      <section className="section-dark pt-28 pb-16 relative overflow-hidden">
-        <div className="grid-overlay" />
-        <div className="glow-orb glow-orb-gold"
-          style={{ width: 600, height: 600, top: -200, right: -150, opacity: 0.06 }} />
+      <section className="section-vert pt-36 pb-24 relative overflow-hidden">
+        <div className="blob blob-yellow" style={{ width: 440, height: 440, top: '-140px', right: '-110px' }} />
+        <div className="blob blob-green"  style={{ width: 360, height: 360, bottom: '-100px', left: '-90px', animationDelay: '-5s' }} />
+        <div className="dot-grid-light absolute inset-0" aria-hidden />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div variants={stagger} initial="hidden" animate="visible">
-            <motion.div variants={fadeUp} custom={0} className="mb-5">
-              <span className="badge-gold">Catalogue complet</span>
-            </motion.div>
-            <motion.h1 variants={fadeUp} custom={1}
-              className="text-5xl md:text-6xl font-black text-white mb-5"
-              style={{ lineHeight: 1.06 }}>
-              Nos <span className="text-gradient-gold">Formations</span>
-            </motion.h1>
-            <motion.p variants={fadeUp} custom={2}
-              className="text-lg max-w-xl leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Le catalogue d'excellence pour accélérer votre carrière. Formations natives,
-              packages et masterclasses exclusives.
-            </motion.p>
-          </motion.div>
+          <Reveal>
+            <span className="inline-flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-[0.22em] px-4 py-2 rounded-full mb-6"
+              style={{ background: 'rgba(255,199,44,0.12)', color: 'var(--yellow-500)', border: '1px solid rgba(255,199,44,0.3)' }}>
+              Catalogue complet
+            </span>
+          </Reveal>
+          <h1 className="display-hero text-5xl md:text-7xl text-white mb-6">
+            <RevealText text="Toutes nos" delay={0.05} />{' '}
+            <span className="tri-text"><RevealText text="formations" delay={0.3} /></span>
+          </h1>
+          <Reveal delay={0.4}>
+            <p className="text-lg max-w-xl leading-relaxed font-medium" style={{ color: 'var(--text-muted)' }}>
+              Le catalogue pour accélérer votre carrière : formations natives,
+              packages téléchargeables et masterclasses live exclusives.
+            </p>
+          </Reveal>
+          <Reveal delay={0.5}>
+            <Magnetic strength={0.2}>
+              <div className="tri-bar w-28 mt-8" />
+            </Magnetic>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── Filter bar (elevated, floats from hero) ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-7 relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="flex flex-col md:flex-row gap-4 items-stretch md:items-center p-4 rounded-2xl"
-          style={{ background: 'var(--dark-elevated)', border: '1px solid var(--gold-border)', backdropFilter: 'blur(12px)' }}>
+      {/* ── Filter bar (flottante) ── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-9 relative z-20">
+        <Reveal y={24}>
+          <div className="card-pop flex flex-col md:flex-row gap-4 items-stretch md:items-center p-4">
 
-          {/* Search */}
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5"
-              style={{ color: 'var(--gold)', width: '1.1rem', height: '1.1rem' }} />
-            <input
-              type="text"
-              placeholder="Rechercher une formation..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="input-dark pl-11"
-            />
+            {/* Search */}
+            <div className="relative flex-1">
+              <motion.span
+                animate={searchTerm ? { rotate: [0, -12, 12, 0], scale: 1.15 } : {}}
+                className="absolute left-4 top-1/2 -translate-y-1/2">
+                <Search className="w-4 h-4" style={{ color: 'var(--green-700)' }} />
+              </motion.span>
+              <input
+                type="text"
+                placeholder="Rechercher une formation…"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className="input-swap !rounded-full pl-11 !border-[1.5px]"
+              />
+            </div>
+
+            {/* Divider */}
+            <div className="hidden md:block w-px self-stretch" style={{ background: 'var(--border)' }} />
+
+            {/* Filter pills */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <SlidersHorizontal className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--green-700)' }} />
+              {filters.map(filter => (
+                <motion.button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  whileHover={{ scale: 1.06, rotate: -1 }}
+                  whileTap={{ scale: 0.94 }}
+                  className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition-all duration-200"
+                  style={activeFilter === filter
+                    ? { background: 'var(--green-700)', color: '#fff', boxShadow: '0 3px 0 var(--green-900)' }
+                    : { background: 'var(--paper)', color: 'var(--ink-soft)', border: '1.5px solid var(--border)' }}>
+                  {filter === 'All' ? 'Toutes' : filter}
+                </motion.button>
+              ))}
+            </div>
           </div>
-
-          {/* Divider */}
-          <div className="hidden md:block w-px self-stretch"
-            style={{ background: 'rgba(255,255,255,0.08)' }} />
-
-          {/* Filter pills */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <SlidersHorizontal className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--gold)' }} />
-            {filters.map(filter => (
-              <motion.button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide transition-all duration-200"
-                style={activeFilter === filter
-                  ? { background: 'var(--gold)', color: '#06111F' }
-                  : { background: 'rgba(255,255,255,0.06)', color: 'var(--text-bright)', border: '1px solid var(--dark-border)' }}>
-                {filter === 'All' ? 'Toutes' : filter}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+        </Reveal>
 
         {/* Results count */}
         {!isLoading && (
           <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}
-            className="text-xs font-semibold mt-5 mb-8 uppercase tracking-widest"
-            style={{ color: 'var(--dark-primary)' }}>
-            {filteredCourses.length} formation{filteredCourses.length !== 1 ? 's' : ''} disponible{filteredCourses.length !== 1 ? 's' : ''}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+            className="text-xs font-bold mt-5 mb-8 uppercase tracking-[0.2em]" style={{ color: 'var(--ink-soft)' }}>
+            <motion.span key={filteredCourses.length} initial={{ scale: 1.4, color: '#149352' }} animate={{ scale: 1, color: 'var(--green-700)' }}
+              className="inline-block font-black text-sm mr-1">{filteredCourses.length}</motion.span>
+            formation{filteredCourses.length !== 1 ? 's' : ''} disponible{filteredCourses.length !== 1 ? 's' : ''}
           </motion.p>
         )}
 
         {/* ── Grid ── */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-28">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 pb-28">
           <AnimatePresence mode="popLayout">
 
-            {isLoading && [1,2,3,4,5,6].map(i => (
-              <div key={i} className="premium-card h-96 animate-pulse" />
+            {isLoading && [1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="card-pop h-96 animate-pulse" />
             ))}
 
             {!isLoading && filteredCourses.length === 0 && (
               <motion.div
                 key="empty"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-24 glass-panel" style={{ border: '1px solid var(--border)' }}>
-                <BookOpen className="w-14 h-14 mx-auto mb-4 text-dark-primary opacity-20" />
-                <p className="text-dark-secondary text-lg font-medium">Aucune formation trouvée.</p>
+                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-24 card-flat">
+                <motion.div animate={{ rotate: [0, -6, 6, 0] }} transition={{ duration: 2.5, repeat: Infinity }}>
+                  <BookOpen className="w-14 h-14 mx-auto mb-4 opacity-25" style={{ color: 'var(--ink)' }} />
+                </motion.div>
+                <p className="text-lg font-medium" style={{ color: 'var(--ink-soft)' }}>Aucune formation trouvée.</p>
               </motion.div>
             )}
 
-            {!isLoading && filteredCourses.map((course, idx) => (
-              <motion.div
-                layout
-                key={course.id}
-                custom={idx}
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="premium-card flex flex-col overflow-hidden group cursor-pointer">
+            {!isLoading && filteredCourses.map((course, idx) => {
+              const meta = TYPE_META[course.type] || { label: 'Formation', icon: BookOpen, color: '#149352', bg: '#DCFCE7' };
+              return (
+                <motion.div
+                  layout
+                  key={course.id}
+                  initial={{ opacity: 0, y: 40, rotate: idx % 3 === 1 ? 0.8 : -0.8 }}
+                  animate={{ opacity: 1, y: 0, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, rotate: idx % 2 ? 3 : -3 }}
+                  transition={{ duration: 0.5, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -10 }}
+                  className="card-pop flex flex-col overflow-hidden group cursor-pointer h-full">
 
-                {/* Thumbnail */}
-                <div className="course-card-img h-48 flex-shrink-0 overflow-hidden relative bg-white">
-                  <img
-                    src={course.image_url || `https://picsum.photos/seed/${course.id}/600/400`}
-                    alt={course.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Dark gradient overlay */}
-                  <div className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top, rgba(7,21,41,0.85) 0%, transparent 55%)' }} />
-                  {/* Type badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"
-                      style={{ background: 'var(--dark-elevated)', color: 'var(--text-bright)', backdropFilter: 'blur(4px)', border: '1px solid var(--dark-border)' }}>
-                      {course.type === 'native'   && <><PlayCircle className="w-3 h-3 text-blue-400" />En ligne</>}
-                      {course.type === 'package'  && <><Download   className="w-3 h-3 text-amber-400" />Téléchargement</>}
-                      {course.type === 'external' && <><LinkIcon   className="w-3 h-3 text-green-400" />Live</>}
-                      {!course.type              && <><PlayCircle className="w-3 h-3 text-blue-600" />Formation</>}
-                    </span>
-                  </div>
-                  {/* Rating */}
-                  <div className="absolute bottom-3 right-3">
-                    <span className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold"
-                      style={{ background: 'var(--dark-elevated)', color: 'var(--gold)', backdropFilter: 'blur(4px)' }}>
-                      <Star className="w-3 h-3 fill-current" />
-                      4.9
-                    </span>
-                  </div>
-                  {/* Category bottom left */}
-                  <div className="absolute bottom-3 left-3">
-                    <span className="badge-gold text-xs py-0.5 px-2">{course.category || 'Formation'}</span>
-                  </div>
-                </div>
-
-                {/* Body */}
-                <div className="p-6 flex flex-col flex-grow bg-white">
-                  <h3 className="text-lg font-bold text-dark-primary mb-3 line-clamp-2 leading-snug
-                    group-hover:text-dark-secondary transition-colors duration-250">
-                    {course.title}
-                  </h3>
-                  <p className="text-sm text-dark-secondary leading-relaxed line-clamp-2 flex-grow mb-5">
-                    {course.description || 'Formation complète pour transformer vos compétences.'}
-                  </p>
-
-                  {/* Footer */}
-                  <div className="flex items-center justify-between pt-5"
-                    style={{ borderTop: '1px solid var(--border)' }}>
-                    <div>
-                      <p className="text-xs text-dark-secondary mb-0.5">Prix</p>
-                      <p className="text-2xl font-black number-glow">{getConvertedPrices(course.price, settings?.currency)?.mainPrice || course.price}</p>
-                      {getConvertedPrices(course.price, settings?.currency) && (
-                        <p className="text-[10px] mt-0.5 font-semibold" style={{ color: 'var(--gold)' }}>
-                          ~ {getConvertedPrices(course.price, settings?.currency)?.othersString}
-                        </p>
-                      )}
+                  {/* Thumbnail */}
+                  <div className="course-card-img h-48 flex-shrink-0 relative" style={{ background: 'var(--green-100)' }}>
+                    <img
+                      src={course.image_url || `https://picsum.photos/seed/${course.id}/600/400`}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Type badge */}
+                    <div className="absolute top-3 left-3">
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+                        style={{ background: meta.bg, color: meta.color, border: `1.5px solid ${meta.color}33` }}>
+                        <meta.icon className="w-3.5 h-3.5" />
+                        {meta.label}
+                      </span>
                     </div>
-                    <Link to={`/courses/${course.id}`} className="btn-gold text-sm py-2.5 px-5">
-                      Voir
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
+                    {/* Rating */}
+                    <div className="absolute bottom-3 right-3">
+                      <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
+                        style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(4px)' }}>
+                        <Star className="w-3 h-3 fill-current" style={{ color: 'var(--yellow-500)' }} />
+                        4.9
+                      </span>
+                    </div>
+                    {/* Category */}
+                    <div className="absolute bottom-3 left-3">
+                      <span className="badge-gold text-[10px]">{course.category || 'Formation'}</span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* Body */}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-lg font-heading font-extrabold mb-3 line-clamp-2 leading-snug" style={{ color: 'var(--ink)' }}>
+                      {course.title}
+                    </h3>
+                    <p className="text-sm font-medium line-clamp-2 flex-grow mb-5" style={{ color: 'var(--ink-soft)' }}>
+                      {course.description || 'Formation complète pour transformer vos compétences.'}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-5 mt-auto" style={{ borderTop: '1.5px dashed var(--border)' }}>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5" style={{ color: 'var(--ink-soft)' }}>Prix</p>
+                        <p className="text-2xl font-heading font-black" style={{ color: 'var(--green-700)' }}>
+                          {getConvertedPrices(course.price, settings?.currency)?.mainPrice || course.price}
+                        </p>
+                        {getConvertedPrices(course.price, settings?.currency) && (
+                          <p className="text-[10px] mt-0.5 font-bold" style={{ color: 'var(--red-600)' }}>
+                            ~ {getConvertedPrices(course.price, settings?.currency)?.othersString}
+                          </p>
+                        )}
+                      </div>
+                      <motion.div whileHover={{ scale: 1.06, rotate: -3 }} whileTap={{ scale: 0.94 }}>
+                        <Link to={`/courses/${course.id}`} className="btn-swap text-sm py-2.5 px-5">
+                          Voir
+                          <ChevronRight className="w-4 h-4" />
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
       </div>

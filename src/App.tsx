@@ -22,6 +22,7 @@ import SmoothScroll from './components/SmoothScroll';
 import { ToastProvider } from './components/Toast';
 import { SettingsProvider } from './components/SettingsProvider';
 import { isAuthenticated } from './services/api';
+import Cursor from './components/Cursor';
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
   const location = useLocation();
@@ -37,6 +38,7 @@ export default function App() {
       <SettingsProvider>
         <ToastProvider>
           <SmoothScroll />
+          <Cursor />
           <BrowserRouter>
           <Routes>
             {/* Public Routes */}

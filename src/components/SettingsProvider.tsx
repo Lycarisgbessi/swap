@@ -6,16 +6,16 @@ type SettingsContextType = {
   platformName: string;
 };
 
-const SettingsContext = createContext<SettingsContextType>({ currency: 'XOF', platformName: 'Plateforme de Formation' });
+const SettingsContext = createContext<SettingsContextType>({ currency: 'XOF', platformName: 'Swap' });
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const [settings, setSettings] = useState<SettingsContextType>({ currency: 'XOF', platformName: 'Plateforme de Formation' });
+  const [settings, setSettings] = useState<SettingsContextType>({ currency: 'XOF', platformName: 'Swap' });
 
   useEffect(() => {
     getSettings().then(s => {
       setSettings({
         currency: s.currency || 'XOF',
-        platformName: s.platformName || 'Plateforme de Formation'
+        platformName: s.platformName || 'Swap'
       });
     }).catch(() => {});
   }, []);
